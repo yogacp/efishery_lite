@@ -12,12 +12,18 @@
         android:roundIcon="@drawable/ic_logo"
         android:supportsRtl="true"
         android:theme="@style/Theme.EFisheryLite">
-        <activity android:name=".presentation.entrance.view.EntranceActivity">
+
+        <activity
+            android:theme="@style/ThemeNoActionBar"
+            android:name=".presentation.entrance.view.EntranceActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".presentation.homepage.view.HomepageActivity"/>
+
     </application>
 
 </manifest>
