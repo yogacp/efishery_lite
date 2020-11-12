@@ -11,12 +11,29 @@
         android:scaleType="fitXY"
         android:contentDescription="@string/app_name"/>
 
-    <ImageView
-        android:id="@+id/iv_gif_container"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_gravity="bottom|start"
-        android:layout_margin="50dp"
-        android:contentDescription="@string/app_name"/>
+    <LinearLayout
+        android:layout_width="@dimen/space_200"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="@dimen/space_small"
+        android:layout_marginBottom="@dimen/space_medium"
+        android:layout_gravity="center_vertical"
+        android:padding="@dimen/space_small">
+
+        <TextView
+            android:id="@+id/tvBannerTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size_16"
+            android:textColor="@color/white"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/tvBannerDesc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
 
 </FrameLayout>

@@ -5,10 +5,10 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.efisherylite.app.R
 import com.efisherylite.app.data.model.banner.SliderItem
+import com.efisherylite.app.external.extensions.toast
 import com.smarteist.autoimageslider.SliderViewAdapter
 
 /**
@@ -49,9 +49,11 @@ class SliderAdapter(private val context: Context) : SliderViewAdapter<SliderAdap
             .load(sliderItem.imageUrl)
             .fitCenter()
             .into(viewHolder.imageViewBackground)
-        viewHolder.itemView.setOnClickListener {
-            Toast.makeText(context, "This is item in position $position", Toast.LENGTH_SHORT)
-                .show()
+
+        viewHolder.imageTitle.text = sliderItem.imageTitle
+        viewHolder.imageDesc.text = sliderItem.imageDesc
+        viewHolder.imageViewBackground.setOnClickListener {
+            context.toast("${sliderItem.imageTitle} Clicked.")
         }
     }
 }

@@ -10,4 +10,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="white_80">#80FFFFFF</color>
     <color name="app_color">#28B796</color>
+    <color name="grey">#636363</color>
+    <color name="light_grey">#E5E5E5</color>
 </resources>

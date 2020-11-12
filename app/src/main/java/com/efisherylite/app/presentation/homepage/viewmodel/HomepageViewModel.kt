@@ -21,21 +21,36 @@ class HomepageViewModel (application: Application): BaseViewModel(application) {
     val imageBanners = MutableLiveData<List<SliderItem>>()
 
     init {
-        fetchStorageList()
         loadStaticImages()
     }
 
-    private fun fetchStorageList() {
+    fun fetchStorageList() {
         viewModelScope.launch(appDispatcher.io()) {
             val data = fetchData { repository.getStorageList() }
             storageList.postValue(data)
         }
     }
 
+    fun searchStorageList(query: String) {
+        //TODO: Will implement in the next commit
+    }
+
     private fun loadStaticImages() {
-        val image1 = SliderItem("https://efishery.com/uploads/images/sliders/18941925b2410bd6178829a0c182d887.png")
-        val image2 = SliderItem("https://efishery.com/uploads/images/sliders/1cfc363757300c69b815e501460584d6.png")
-        val image3 = SliderItem("https://efishery.com/uploads/images/sliders/a10d9e215ea519e46f3318538daa6d79.png")
+        val image1 = SliderItem(
+            "https://efishery.com/uploads/images/sliders/18941925b2410bd6178829a0c182d887.png",
+            "eFisheryFeeder",
+            "Tumbuh Bersama Para Pembudidaya"
+        )
+        val image2 = SliderItem(
+            "https://efishery.com/uploads/images/sliders/1cfc363757300c69b815e501460584d6.png",
+            "eFisheryFresh",
+            "Pesan Ikan Segar Jadi Lebih Mudah di eFisheryFresh"
+        )
+        val image3 = SliderItem(
+            "https://efishery.com/uploads/images/sliders/a10d9e215ea519e46f3318538daa6d79.png",
+            "eFisheryFeed & eFisheryFund",
+            "Terus Mendukung Kesejahteraan Pembudidaya Indonesia"
+        )
         imageBanners.postValue(listOf(image1, image2, image3))
     }
 

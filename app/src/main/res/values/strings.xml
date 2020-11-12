@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">eFishery Lite</string>
     <string name="loading_title">Loading</string>
+    <string name="search_hint">Search here</string>
+    <string name="search_label">Search</string>
+    <string name="search_reset_text">Reset</string>
 </resources>
