@@ -9,7 +9,9 @@ import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import com.efisherylite.app.R
-import com.efisherylite.app.data.model.storagelist.StorageList
+import com.efisherylite.app.data.dao.optionarea.OptionAreaEntity
+import com.efisherylite.app.data.dao.optionsize.OptionSizeEntity
+import com.efisherylite.app.data.dao.storagelist.StorageListEntity
 import com.efisherylite.app.databinding.ActivityHomepageBinding
 import com.efisherylite.app.domain.adapter.banner.SliderAdapter
 import com.efisherylite.app.domain.base.activity.BaseActivity
@@ -30,10 +32,13 @@ class HomepageActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setupToolbar()
-        observeStorageList()
         observeImageBanner()
-        viewModel.fetchStorageList()
+        observeStorageList()
+        observeOptionArea()
+        observeOptionSize()
+        setupSearchview()
+        setupToolbar()
+        viewModel.fetchAllData()
     }
 
     override fun onBackPressed() {
@@ -48,9 +53,16 @@ class HomepageActivity : BaseActivity() {
         binding.layoutLoading.layoutProgressbar.setVisibleIf(isShow)
     }
 
-    private fun setupView(storages: List<StorageList>) {
-        toast("Success. Data fetched: ${storages.size}")
-        binding.tvHomepage.text = "Data Fetched: ${storages.size}"
+    private fun setupStorage(storages: List<StorageListEntity>) {
+        binding.tvHomepage.text = "Storage List Fetched: ${storages.size} data"
+    }
+
+    private fun setupArea(areas: List<OptionAreaEntity>) {
+        binding.tvArea.text = "Option Area Fetched: ${areas.size} area"
+    }
+
+    private fun setupSize(sizes: List<OptionSizeEntity>) {
+        binding.tvSize.text = "Option Size Fetched: ${sizes.size} size"
     }
 
     private fun observeImageBanner() {
@@ -92,10 +104,79 @@ class HomepageActivity : BaseActivity() {
                 }
                 is ResultState.Success -> {
                     showLoading(false)
-                    val data = it.payload ?: emptyList()
-                    setupView(data)
+                    observeGetStorages()
                 }
             }
+        })
+    }
+
+    private fun observeOptionArea() {
+        viewModel.optionAreas.observe(this, Observer {
+            when (it) {
+                is ResultState.Idle -> {
+                    // idle
+                }
+                is ResultState.Loading -> {
+                    showLoading(true)
+                }
+                is ResultState.Error -> {
+                    showLoading(false)
+                    val throwable = it.throwable
+                    toast("error: ${throwable?.message}")
+                }
+                is ResultState.Message -> {
+                    showLoading(false)
+                    toast("Message: ${it.msg}")
+                }
+                is ResultState.Success -> {
+                    showLoading(false)
+                    observeGetAreas()
+                }
+            }
+        })
+    }
+
+    private fun observeOptionSize() {
+        viewModel.optionSizes.observe(this, Observer {
+            when (it) {
+                is ResultState.Idle -> {
+                    // idle
+                }
+                is ResultState.Loading -> {
+                    showLoading(true)
+                }
+                is ResultState.Error -> {
+                    showLoading(false)
+                    val throwable = it.throwable
+                    toast("error: ${throwable?.message}")
+                }
+                is ResultState.Message -> {
+                    showLoading(false)
+                    toast("Message: ${it.msg}")
+                }
+                is ResultState.Success -> {
+                    showLoading(false)
+                    observeGetSizes()
+                }
+            }
+        })
+    }
+
+    private fun observeGetStorages() {
+        viewModel.getSavedStorages().observe(this, Observer {
+            setupStorage(it)
+        })
+    }
+
+    private fun observeGetAreas() {
+        viewModel.getSavedAreas().observe(this, Observer {
+            setupArea(it)
+        })
+    }
+
+    private fun observeGetSizes() {
+        viewModel.getSavedSizes().observe(this, Observer {
+            setupSize(it)
         })
     }
 
@@ -113,7 +194,6 @@ class HomepageActivity : BaseActivity() {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 query.notNullOrEmpty {
                     viewModel.searchStorageList(it)
-                    showSearchResetButton(true)
 
                     //TODO: Will remove when searchStorage is done
                     toast("Searching")
@@ -124,21 +204,13 @@ class HomepageActivity : BaseActivity() {
 
         clearTextButton.setOnClickListener {
             clearSearchFocus()
-            viewModel.fetchStorageList()
         }
 
-        binding.layoutSearchView.btnSearchReset.setOnClickListener {
-            clearSearchFocus()
-        }
     }
 
     private fun clearSearchFocus() {
         binding.layoutSearchView.searchView.setQuery("", false)
         binding.layoutSearchView.searchView.clearFocus()
-        showSearchResetButton(false)
     }
 
-    private fun showSearchResetButton(isShow: Boolean) {
-        binding.layoutSearchView.btnSearchReset.setVisibleIf(isShow)
-    }
 }

@@ -9,15 +9,15 @@ import androidx.room.*
  */
 @Dao
 interface StorageListDao {
-    @Query("SELECT * FROM storagelist")
+    @Query("SELECT * FROM storages")
     fun getAllStorage(): LiveData<List<StorageListEntity>>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(storage: List<StorageListEntity>)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertAll(storage: List<StorageListEntity>)
 
     @Delete
-    fun deleteStorage(storage: StorageListEntity)
+    suspend fun deleteStorage(storage: StorageListEntity)
 
-    @Query("DELETE FROM storagelist")
-    fun deleteAllStorage()
+    @Query("DELETE FROM storages")
+    suspend fun deleteAllStorage()
 }

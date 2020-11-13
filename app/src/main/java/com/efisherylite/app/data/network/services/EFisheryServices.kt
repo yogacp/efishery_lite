@@ -1,6 +1,8 @@
 package com.efisherylite.app.data.network.services
 
 import com.efisherylite.app.data.constant.RESTConstant
+import com.efisherylite.app.data.model.optionarea.OptionArea
+import com.efisherylite.app.data.model.optionsize.OptionSize
 import com.efisherylite.app.data.model.storagelist.StorageList
 import kotlinx.coroutines.Deferred
 import retrofit2.Response
@@ -15,4 +17,12 @@ interface EFisheryServices {
     @Headers(RESTConstant.HEADERS.CONTENT_JSON)
     @GET(RESTConstant.API_VERSION.V1 + RESTConstant.LIST)
     fun getStorageList(): Deferred<Response<List<StorageList>>>
+
+    @Headers(RESTConstant.HEADERS.CONTENT_JSON)
+    @GET(RESTConstant.API_VERSION.V1 + RESTConstant.OPTION_AREA)
+    fun getOptionArea(): Deferred<Response<List<OptionArea>>>
+
+    @Headers(RESTConstant.HEADERS.CONTENT_JSON)
+    @GET(RESTConstant.API_VERSION.V1 + RESTConstant.OPTION_SIZE)
+    fun getOptionSize(): Deferred<Response<List<OptionSize>>>
 }
