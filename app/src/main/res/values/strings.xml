@@ -1,12 +1,11 @@
 <resources>
     <string name="app_name">eFishery Lite</string>
     <string name="loading_title">Loading</string>
-    <string name="search_hint">Search here</string>
-    <string name="search_label">Search</string>
-    <string name="search_reset_text">Reset</string>
+    <string name="search_hint">Cari komoditas</string>
+    <string name="search_label">Cari</string>
 
-    <string name="add_item_title">Add</string>
-    <string name="sort_item_title">Sort</string>
+    <string name="add_item_title">Tambah</string>
+    <string name="sort_item_title">Urutkan</string>
     <string name="filter_item_title">Filter</string>
 
     <string name="storage_list_area">%1$s - %2$s</string>
