@@ -9,7 +9,7 @@ import androidx.room.*
  */
 @Dao
 interface StorageListDao {
-    @Query("SELECT * FROM storages")
+    @Query("SELECT * FROM storages GROUP BY area_provinsi")
     fun getAllStorage(): LiveData<List<StorageListEntity>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)

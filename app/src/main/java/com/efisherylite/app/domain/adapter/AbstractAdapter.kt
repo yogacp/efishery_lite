@@ -24,15 +24,26 @@ abstract class AbstractAdapter<T : ViewBinding, ITEM> constructor(
     }
 
     override fun getItemCount(): Int = itemList.size
+    override fun getItemViewType(position: Int): Int = position
 
     @Suppress("UNCHECKED_CAST")
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val inflateMethod =
-            bindingClass.getMethod("inflate", LayoutInflater::class.java, ViewGroup::class.java, Boolean::class.java)
-        val binding = inflateMethod.invoke(null, LayoutInflater.from(parent.context), parent, false) as T
+            bindingClass.getMethod(
+                "inflate",
+                LayoutInflater::class.java,
+                ViewGroup::class.java,
+                Boolean::class.java
+            )
+
+        val binding =
+            inflateMethod.invoke(null, LayoutInflater.from(parent.context), parent, false) as T
+
         this.binding = binding
+
         val viewHolder = Holder(binding.root)
         val itemView = viewHolder.itemView
+
         itemView.tag = viewHolder
         itemView.setOnClickListener {
             val adapterPosition = viewHolder.adapterPosition

@@ -1,7 +1,6 @@
 package com.efisherylite.app.presentation.homepage.viewmodel
 
 import android.app.Application
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.efisherylite.app.data.dao.optionarea.OptionAreaEntity
@@ -28,8 +27,6 @@ class HomepageViewModel(application: Application) : BaseViewModel(application) {
 
     private val database: DatabaseHelper by inject()
     val storageList = liveDataOf<List<StorageList>>()
-    val optionAreas = liveDataOf<List<OptionArea>>()
-    val optionSizes = liveDataOf<List<OptionSize>>()
     val imageBanners = MutableLiveData<List<SliderItem>>()
 
     init {
@@ -37,18 +34,21 @@ class HomepageViewModel(application: Application) : BaseViewModel(application) {
     }
 
     fun getSavedStorages() = database.getAllStorage()
-    fun getSavedAreas() = database.getAllAreas()
-    fun getSavedSizes() = database.getAllSizes()
 
     fun fetchAllData() {
         viewModelScope.launch(appDispatcher.io()) {
-            val storages = fetchData { repository.getStorageList() }
-            val areas = fetchData { repository.getOptionArea() }
-            val sizes = fetchData { repository.getOptionSize() }
+            try {
+                val storages = fetchData { repository.getStorageList() }
+                val areas = fetchData { repository.getOptionArea() }
+                val sizes = fetchData { repository.getOptionSize() }
 
-            saveStorageList(storages)
-            saveOptionArea(areas)
-            saveOptionSize(sizes)
+                saveStorageList(storages)
+                saveOptionArea(areas)
+                saveOptionSize(sizes)
+            } catch (error: Exception) {
+                error.printStackTrace()
+                storageList.postValue(ResultState.Error(error))
+            }
         }
     }
 
@@ -61,9 +61,9 @@ class HomepageViewModel(application: Application) : BaseViewModel(application) {
             val dbStorages = arrayListOf<StorageListEntity>()
 
             storages.payload?.forEach { storage ->
-                storage.uuid.notNullOrEmpty { uuid ->
+                if (storage.uuid?.isNotEmpty() == true && storage.komoditas?.isNotEmpty() == true) {
                     val entity = StorageListEntity(
-                        uuid = uuid,
+                        uuid = storage.uuid,
                         areaKota = storage.areaKota,
                         areaProvinsi = storage.areaProvinsi,
                         tglParsed = storage.tglParsed,
@@ -96,7 +96,6 @@ class HomepageViewModel(application: Application) : BaseViewModel(application) {
             }
 
             database.insertAllAreas(dbArea)
-            optionAreas.postValue(areas)
         }
     }
 
@@ -112,7 +111,6 @@ class HomepageViewModel(application: Application) : BaseViewModel(application) {
             }
 
             database.insertAllSizes(dbSize)
-            optionSizes.postValue(sizes)
         }
     }
 

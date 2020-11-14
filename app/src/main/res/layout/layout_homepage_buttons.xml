@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardviewButtons"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:elevation="@dimen/space_tiny"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="@dimen/space_24">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/space_small">
+
+        <TextView
+            android:id="@+id/tvSort"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sort_item_title"
+            android:layout_marginStart="@dimen/space_small"
+            android:foreground="?attr/selectableItemBackground"
+            android:drawablePadding="@dimen/space_small"
+            android:paddingStart="@dimen/space_small"
+            android:paddingEnd="@dimen/space_small"
+            app:drawableStartCompat="@drawable/ic_sort"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <View
+            android:id="@+id/view1"
+            android:layout_width="@dimen/no_space1"
+            android:layout_height="@dimen/no_space"
+            android:background="@color/app_color"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tvSort"/>
+
+        <TextView
+            android:id="@+id/tvFilter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/filter_item_title"
+            android:foreground="?attr/selectableItemBackground"
+            android:drawablePadding="@dimen/space_small"
+            android:paddingStart="@dimen/space_small"
+            android:paddingEnd="@dimen/space_small"
+            app:drawableStartCompat="@drawable/ic_filter"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/view1" />
+
+        <View
+            android:id="@+id/view2"
+            android:layout_width="@dimen/no_space1"
+            android:layout_height="@dimen/no_space"
+            android:background="@color/app_color"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tvFilter"/>
+
+        <TextView
+            android:id="@+id/tvAddItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/add_item_title"
+            android:foreground="?attr/selectableItemBackground"
+            android:drawablePadding="@dimen/space_small"
+            android:paddingStart="@dimen/space_small"
+            android:paddingEnd="@dimen/space_small"
+            app:drawableStartCompat="@drawable/ic_list_plus"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/view2" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

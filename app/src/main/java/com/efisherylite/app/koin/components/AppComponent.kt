@@ -15,8 +15,8 @@ val appComponent: List<Module> = listOf(
      * Core Module
      */
     appModule,
-    networkModule,
     databaseModule,
+    networkModule,
 
     /**
      * Feature Module

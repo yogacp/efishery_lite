@@ -14,10 +14,10 @@ import retrofit2.Response
  * Created by Yoga C. Pranata on 12/11/2020.
  * Android Engineer
  */
-class EFisheryDataStore (
+class EFisheryDataStore(
     private val service: EFisheryServices,
     private val dispatcher: DispatcherProvider
-): EFisheryRepository {
+) : EFisheryRepository {
 
     override suspend fun getStorageList(): Response<List<StorageList>> {
         return withContext(dispatcher.io()) {
