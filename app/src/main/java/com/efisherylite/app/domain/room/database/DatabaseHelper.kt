@@ -14,6 +14,7 @@ interface DatabaseHelper {
      * Storage List Database
      */
     fun getAllStorage(): LiveData<List<StorageListEntity>>
+    fun searchStorageByCommodity(query: String?): LiveData<List<StorageListEntity>>
     suspend fun insertAllStorage(storages: List<StorageListEntity>)
     suspend fun deleteStorage(storage: StorageListEntity)
     suspend fun deleteAllStorage()

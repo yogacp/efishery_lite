@@ -1,6 +1,7 @@
 package com.efisherylite.app.presentation.homepage.viewmodel
 
 import android.app.Application
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.efisherylite.app.data.dao.optionarea.OptionAreaEntity
@@ -28,12 +29,23 @@ class HomepageViewModel(application: Application) : BaseViewModel(application) {
     private val database: DatabaseHelper by inject()
     val storageList = liveDataOf<List<StorageList>>()
     val imageBanners = MutableLiveData<List<SliderItem>>()
+    var searchCommodityQuery: String? = null
 
     init {
         loadStaticImages()
     }
 
-    fun getSavedStorages() = database.getAllStorage()
+    fun getStorageList() : LiveData<List<StorageListEntity>> {
+        return if (searchCommodityQuery?.isNotEmpty() == true) {
+            database.searchStorageByCommodity("%$searchCommodityQuery%")
+        } else {
+            database.getAllStorage()
+        }
+    }
+
+    fun searchCommodity(query: String) {
+        searchCommodityQuery = query
+    }
 
     fun fetchAllData() {
         viewModelScope.launch(appDispatcher.io()) {
@@ -50,10 +62,6 @@ class HomepageViewModel(application: Application) : BaseViewModel(application) {
                 storageList.postValue(ResultState.Error(error))
             }
         }
-    }
-
-    fun searchStorageList(query: String) {
-        //TODO: Will implement in the next commit
     }
 
     private fun saveStorageList(storages: ResultState<List<StorageList>>) {

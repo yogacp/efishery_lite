@@ -15,6 +15,7 @@ class DatabaseHelperImpl(private val appDatabase: AppDatabase) : DatabaseHelper 
      * Storage List Database
      */
     override fun getAllStorage(): LiveData<List<StorageListEntity>> = appDatabase.storageDao().getAllStorage()
+    override fun searchStorageByCommodity(query: String?): LiveData<List<StorageListEntity>> = appDatabase.storageDao().searchStorageByCommodity(query)
     override suspend fun insertAllStorage(storages: List<StorageListEntity>) = appDatabase.storageDao().insertAll(storages)
     override suspend fun deleteStorage(storage: StorageListEntity) = appDatabase.storageDao().deleteStorage(storage)
     override suspend fun deleteAllStorage() = appDatabase.storageDao().deleteAllStorage()

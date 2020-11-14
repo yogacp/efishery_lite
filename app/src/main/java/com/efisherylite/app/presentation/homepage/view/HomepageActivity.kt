@@ -59,7 +59,7 @@ class HomepageActivity : BaseActivity() {
         if (isNetworkActive()) {
             viewModel.fetchAllData()
         } else {
-            getObservedStorages()
+            refreshStorageList()
         }
     }
 
@@ -134,14 +134,14 @@ class HomepageActivity : BaseActivity() {
                     toast("Message: ${it.msg}")
                 }
                 is ResultState.Success -> {
-                    getObservedStorages()
+                    refreshStorageList()
                 }
             }
         })
     }
 
-    private fun getObservedStorages() {
-        viewModel.getSavedStorages().observe(this, Observer {
+    private fun refreshStorageList() {
+        viewModel.getStorageList().observe(this, Observer {
             showLoading(false)
             setupStorage(it)
         })
@@ -166,10 +166,9 @@ class HomepageActivity : BaseActivity() {
 
             override fun onQueryTextSubmit(query: String?): Boolean {
                 query.notNullOrEmpty {
-                    viewModel.searchStorageList(it)
-
-                    //TODO: Will remove when searchStorage is done
-                    toast("Searching")
+                    showLoading(true)
+                    viewModel.searchCommodity(it)
+                    refreshStorageList()
                 }
                 return true
             }
@@ -177,6 +176,8 @@ class HomepageActivity : BaseActivity() {
 
         clearTextButton.setOnClickListener {
             clearSearchFocus()
+            viewModel.searchCommodity("")
+            refreshStorageList()
         }
 
     }

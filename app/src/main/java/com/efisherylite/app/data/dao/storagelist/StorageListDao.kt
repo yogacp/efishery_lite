@@ -12,6 +12,9 @@ interface StorageListDao {
     @Query("SELECT * FROM storages GROUP BY area_provinsi")
     fun getAllStorage(): LiveData<List<StorageListEntity>>
 
+    @Query("SELECT * FROM storages WHERE komoditas LIKE :query")
+    fun searchStorageByCommodity(query: String?): LiveData<List<StorageListEntity>>
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertAll(storage: List<StorageListEntity>)
 
