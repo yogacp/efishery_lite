@@ -15,6 +15,18 @@ interface StorageListDao {
     @Query("SELECT * FROM storages WHERE komoditas LIKE :query")
     fun searchStorageByCommodity(query: String?): LiveData<List<StorageListEntity>>
 
+    @Query("SELECT * FROM storages WHERE komoditas LIKE :commodity ORDER BY price ASC")
+    fun searchStorageByLowestPrice(commodity: String?): LiveData<List<StorageListEntity>>
+
+    @Query("SELECT * FROM storages WHERE komoditas LIKE :commodity ORDER BY price DESC")
+    fun searchStorageByHighestPrice(commodity: String?): LiveData<List<StorageListEntity>>
+
+    @Query("SELECT * FROM storages WHERE komoditas LIKE :commodity ORDER BY size ASC")
+    fun searchStorageByLowestSize(commodity: String?): LiveData<List<StorageListEntity>>
+
+    @Query("SELECT * FROM storages WHERE komoditas LIKE :commodity ORDER BY size DESC")
+    fun searchStorageByHighestSize(commodity: String?): LiveData<List<StorageListEntity>>
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertAll(storage: List<StorageListEntity>)
 

@@ -15,6 +15,10 @@ interface DatabaseHelper {
      */
     fun getAllStorage(): LiveData<List<StorageListEntity>>
     fun searchStorageByCommodity(query: String?): LiveData<List<StorageListEntity>>
+    fun searchStorageByLowestPrice(commodity: String?): LiveData<List<StorageListEntity>>
+    fun searchStorageByHighestPrice(commodity: String?): LiveData<List<StorageListEntity>>
+    fun searchStorageByLowestSize(commodity: String?): LiveData<List<StorageListEntity>>
+    fun searchStorageByHighestSize(commodity: String?): LiveData<List<StorageListEntity>>
     suspend fun insertAllStorage(storages: List<StorageListEntity>)
     suspend fun deleteStorage(storage: StorageListEntity)
     suspend fun deleteAllStorage()

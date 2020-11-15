@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.efisherylite.app.data.constant.FilterConstant
 import com.efisherylite.app.data.dao.optionarea.OptionAreaEntity
 import com.efisherylite.app.data.dao.optionsize.OptionSizeEntity
 import com.efisherylite.app.data.dao.storagelist.StorageListEntity
@@ -30,16 +31,28 @@ class HomepageViewModel(application: Application) : BaseViewModel(application) {
     val storageList = liveDataOf<List<StorageList>>()
     val imageBanners = MutableLiveData<List<SliderItem>>()
     var searchCommodityQuery: String? = null
+    var sortFilter = 0
 
     init {
         loadStaticImages()
     }
 
-    fun getStorageList() : LiveData<List<StorageListEntity>> {
+    fun getStorageList(): LiveData<List<StorageListEntity>> {
         return if (searchCommodityQuery?.isNotEmpty() == true) {
             database.searchStorageByCommodity("%$searchCommodityQuery%")
         } else {
             database.getAllStorage()
+        }
+    }
+
+    fun getStorageListBySort(): LiveData<List<StorageListEntity>> {
+        searchCommodityQuery = if(searchCommodityQuery.isNullOrEmpty()) "%%" else "%$searchCommodityQuery%"
+        return when (sortFilter) {
+            FilterConstant.LOWEST_PRICE -> database.searchStorageByLowestPrice(searchCommodityQuery)
+            FilterConstant.HIGHEST_PRICE -> database.searchStorageByHighestPrice(searchCommodityQuery)
+            FilterConstant.LOWEST_SIZE -> database.searchStorageByLowestSize(searchCommodityQuery)
+            FilterConstant.HIGHEST_SIZE -> database.searchStorageByHighestSize(searchCommodityQuery)
+            else -> database.getAllStorage()
         }
     }
 

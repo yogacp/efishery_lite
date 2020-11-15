@@ -12,11 +12,13 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.efisherylite.app.R
+import com.efisherylite.app.data.constant.FilterConstant
 import com.efisherylite.app.data.dao.storagelist.StorageListEntity
 import com.efisherylite.app.databinding.ActivityHomepageBinding
 import com.efisherylite.app.databinding.ItemStorageListBinding
 import com.efisherylite.app.domain.adapter.banner.SliderAdapter
 import com.efisherylite.app.domain.base.activity.BaseActivity
+import com.efisherylite.app.domain.callback.DialogFragmentCallback
 import com.efisherylite.app.external.extensions.*
 import com.efisherylite.app.external.state.ResultState
 import com.efisherylite.app.presentation.homepage.viewmodel.HomepageViewModel
@@ -25,7 +27,7 @@ import com.smarteist.autoimageslider.SliderAnimations
 import com.smarteist.autoimageslider.SliderView
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class HomepageActivity : BaseActivity() {
+class HomepageActivity : BaseActivity(), DialogFragmentCallback {
 
     private val binding: ActivityHomepageBinding by viewBinding()
     private val viewModel: HomepageViewModel by viewModel()
@@ -45,6 +47,14 @@ class HomepageActivity : BaseActivity() {
         finishAffinity()
     }
 
+    override fun <T> onResultDialog(data: T) {
+        if (data as Int in FilterConstant.LOWEST_PRICE..FilterConstant.HIGHEST_SIZE) {
+            showLoading(true)
+            viewModel.sortFilter = data
+            sortStorageListBy()
+        }
+    }
+
     private fun setupToolbar() {
         supportActionBar?.title = getString(R.string.app_name)
     }
@@ -56,10 +66,14 @@ class HomepageActivity : BaseActivity() {
     private fun loadAllData() {
         showLoading(true)
 
-        if (isNetworkActive()) {
+        if (isNetworkActive() && (viewModel.searchCommodityQuery.isNullOrEmpty() || viewModel.sortFilter == 0)) {
             viewModel.fetchAllData()
         } else {
-            refreshStorageList()
+            if(viewModel.sortFilter > 0) {
+                sortStorageListBy()
+            } else {
+                refreshStorageList()
+            }
         }
     }
 
@@ -147,6 +161,13 @@ class HomepageActivity : BaseActivity() {
         })
     }
 
+    private fun sortStorageListBy() {
+        viewModel.getStorageListBySort().observe(this, Observer {
+            showLoading(false)
+            setupStorage(it)
+        })
+    }
+
     private fun setupSearchview() {
         val searchManager = getSystemService(SEARCH_SERVICE) as SearchManager?
         val clearTextButton =
@@ -200,7 +221,8 @@ class HomepageActivity : BaseActivity() {
     private fun setupHomepageButtons() {
         initAnimation()
 
-        binding.layoutStorageList.rvStorageList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        binding.layoutStorageList.rvStorageList.addOnScrollListener(object :
+            RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 if (dy < 0 && !binding.layoutButtons.cardviewButtons.isVisible) {
                     showHomepageButtons()
@@ -211,7 +233,7 @@ class HomepageActivity : BaseActivity() {
         })
 
         binding.layoutButtons.tvSort.setOnClickListener {
-            toast("Sort item clicked")
+            router.openSortFilterDialog(this)
         }
 
         binding.layoutButtons.tvFilter.setOnClickListener {

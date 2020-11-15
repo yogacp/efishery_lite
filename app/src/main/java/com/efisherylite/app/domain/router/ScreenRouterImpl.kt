@@ -2,7 +2,9 @@ package com.efisherylite.app.domain.router
 
 import android.content.Context
 import android.content.Intent
+import com.efisherylite.app.presentation.dialogfragment.sortview.view.SortViewBottomSheetDialog
 import com.efisherylite.app.presentation.homepage.view.HomepageActivity
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 /**
  * Created by Yoga C. Pranata on 12/11/2020.
@@ -16,6 +18,13 @@ class ScreenRouterImpl : ScreenRouter {
         }
 
         return if(klazz == null) null else Intent(context, klazz)
+    }
+
+    override fun getBottomSheetDialogFragmentScreenLayout(screen: ScreenRouter.DialogScreen): BottomSheetDialogFragment? {
+        return when(screen) {
+            ScreenRouter.DialogScreen.SortFilter -> SortViewBottomSheetDialog()
+            else -> null
+        }
     }
 
 }

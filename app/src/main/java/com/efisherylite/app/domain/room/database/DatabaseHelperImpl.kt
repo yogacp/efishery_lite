@@ -16,6 +16,10 @@ class DatabaseHelperImpl(private val appDatabase: AppDatabase) : DatabaseHelper 
      */
     override fun getAllStorage(): LiveData<List<StorageListEntity>> = appDatabase.storageDao().getAllStorage()
     override fun searchStorageByCommodity(query: String?): LiveData<List<StorageListEntity>> = appDatabase.storageDao().searchStorageByCommodity(query)
+    override fun searchStorageByLowestPrice(commodity: String?): LiveData<List<StorageListEntity>> = appDatabase.storageDao().searchStorageByLowestPrice(commodity)
+    override fun searchStorageByHighestPrice(commodity: String?) = appDatabase.storageDao().searchStorageByHighestPrice(commodity)
+    override fun searchStorageByLowestSize(commodity: String?) = appDatabase.storageDao().searchStorageByLowestSize(commodity)
+    override fun searchStorageByHighestSize(commodity: String?) = appDatabase.storageDao().searchStorageByHighestSize(commodity)
     override suspend fun insertAllStorage(storages: List<StorageListEntity>) = appDatabase.storageDao().insertAll(storages)
     override suspend fun deleteStorage(storage: StorageListEntity) = appDatabase.storageDao().deleteStorage(storage)
     override suspend fun deleteAllStorage() = appDatabase.storageDao().deleteAllStorage()
