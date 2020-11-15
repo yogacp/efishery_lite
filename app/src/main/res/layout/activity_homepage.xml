@@ -65,7 +65,7 @@
 
     <include
         android:id="@+id/layoutButtons"
-        layout="@layout/layout_homepage_buttons"
+        layout="@layout/layout_homepage_filters"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"

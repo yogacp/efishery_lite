@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/space_medium">
+
+        <TextView
+            android:id="@+id/tvNewItemTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/new_item_title"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_18"
+            android:textStyle="bold"
+            android:textAllCaps="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/viewProvinsi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_medium"
+            android:theme="@style/TextInputLayout.Cursor.Black"
+            android:textColorHint="@color/black"
+            app:boxBackgroundColor="@color/white"
+            app:layout_constraintTop_toBottomOf="@+id/tvNewItemTitle"
+            app:layout_constraintStart_toStartOf="parent"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu">
+
+            <AutoCompleteTextView
+                android:id="@+id/atvProvinsi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:hint="@string/new_item_area_provinsi"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/viewKota"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_medium"
+            android:theme="@style/TextInputLayout.Cursor.Black"
+            android:textColorHint="@color/black"
+            app:boxBackgroundColor="@color/white"
+            app:layout_constraintTop_toBottomOf="@+id/viewProvinsi"
+            app:layout_constraintStart_toStartOf="parent"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu">
+
+            <AutoCompleteTextView
+                android:id="@+id/atvKota"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:hint="@string/new_item_area_kota"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/viewKomoditas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_medium"
+            android:hint="@string/new_item_komoditas"
+            android:theme="@style/TextInputLayout.Cursor.Black"
+            android:textColorHint="@color/black"
+            app:boxBackgroundColor="@color/white"
+            app:layout_constraintTop_toBottomOf="@+id/viewKota"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etKomoditas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/viewHarga"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_medium"
+            android:hint="@string/new_item_harga"
+            android:theme="@style/TextInputLayout.Cursor.Black"
+            android:textColorHint="@color/black"
+            app:boxBackgroundColor="@color/white"
+            app:layout_constraintTop_toBottomOf="@+id/viewKomoditas"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etHarga"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/viewUkuran"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_medium"
+            android:theme="@style/TextInputLayout.Cursor.Black"
+            android:textColorHint="@color/black"
+            app:boxBackgroundColor="@color/white"
+            app:layout_constraintTop_toBottomOf="@+id/viewHarga"
+            app:layout_constraintStart_toStartOf="parent"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu">
+
+            <AutoCompleteTextView
+                android:id="@+id/atvUkuran"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:hint="@string/new_item_ukuran"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/btnSave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/save_title"
+            android:padding="@dimen/space_small"
+            android:layout_marginTop="@dimen/space_medium"
+            android:layout_marginBottom="@dimen/space_medium"
+            app:layout_constraintTop_toBottomOf="@+id/viewUkuran"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <Button
+            android:id="@+id/btnCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/cancel_title"
+            android:padding="@dimen/space_small"
+            android:textColor="@color/grey"
+            android:theme="@style/Button.White"
+            android:layout_marginTop="@dimen/space_medium"
+            android:layout_marginBottom="@dimen/space_medium"
+            android:layout_marginEnd="@dimen/space_medium"
+            app:layout_constraintTop_toBottomOf="@+id/viewUkuran"
+            app:layout_constraintEnd_toStartOf="@+id/btnSave"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

@@ -30,6 +30,9 @@ interface StorageListDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertAll(storage: List<StorageListEntity>)
 
+    @Insert
+    suspend fun insert(storage: StorageListEntity)
+
     @Delete
     suspend fun deleteStorage(storage: StorageListEntity)
 

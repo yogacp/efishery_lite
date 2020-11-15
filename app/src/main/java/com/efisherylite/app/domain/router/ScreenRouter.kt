@@ -2,6 +2,7 @@ package com.efisherylite.app.domain.router
 
 import android.content.Context
 import android.content.Intent
+import androidx.fragment.app.DialogFragment
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 /**
@@ -16,8 +17,10 @@ interface ScreenRouter {
 
     sealed class DialogScreen {
         object SortFilter: DialogScreen()
+        object AddNewItem: DialogScreen()
     }
 
     fun getScreenIntent(context: Context, screen: ActivityScreen): Intent?
+    fun getDialogFragmentScreenLayout(screen: DialogScreen): DialogFragment?
     fun getBottomSheetDialogFragmentScreenLayout(screen: DialogScreen): BottomSheetDialogFragment?
 }

@@ -21,7 +21,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 class SortViewBottomSheetDialog : BaseBottomSheetDialogFragment() {
 
     private val viewModel: SortViewModel by viewModel()
-    var binding: BottomsheetSortViewBinding? = null
+    private var binding: BottomsheetSortViewBinding? = null
 
     override fun getHeightDialog(): Int = resources.getDimension(R.dimen.space_250).toInt()
 

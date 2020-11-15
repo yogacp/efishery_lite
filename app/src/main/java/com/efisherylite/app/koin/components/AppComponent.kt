@@ -3,6 +3,7 @@ package com.efisherylite.app.koin.components
 import com.efisherylite.app.koin.module.appModule
 import com.efisherylite.app.koin.module.databaseModule
 import com.efisherylite.app.koin.module.networkModule
+import com.efisherylite.app.presentation.dialogfragment.newitem.module.newItemModule
 import com.efisherylite.app.presentation.dialogfragment.sortview.module.sortViewModule
 import com.efisherylite.app.presentation.homepage.module.homepageModule
 import org.koin.core.module.Module
@@ -23,5 +24,6 @@ val appComponent: List<Module> = listOf(
      * Feature Module
      */
     homepageModule,
-    sortViewModule
+    sortViewModule,
+    newItemModule
 )

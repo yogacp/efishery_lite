@@ -30,4 +30,10 @@ class RouterNavigation(private val screenRouter: ScreenRouter) {
         screen?.show(context.supportFragmentManager, DialogConstant.DIALOG_SCREEN.SORT_FILTER)
     }
 
+    fun openAddNewItemDialog(context: AppCompatActivity) {
+        val screen =
+            screenRouter.getDialogFragmentScreenLayout(ScreenRouter.DialogScreen.AddNewItem)
+        screen?.show(context.supportFragmentManager, DialogConstant.DIALOG_SCREEN.ADD_NEW_ITEM)
+    }
+
 }

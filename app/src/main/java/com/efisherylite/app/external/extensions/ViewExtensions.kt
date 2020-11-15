@@ -1,11 +1,17 @@
 package com.efisherylite.app.external.extensions
 
+import android.app.Dialog
+import android.content.Context
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
+import com.efisherylite.app.R
 import com.efisherylite.app.domain.adapter.GeneralAdapter
 import com.efisherylite.app.domain.adapter.GeneralRadioAdapter
 
@@ -18,6 +24,19 @@ infix fun ViewGroup.inflate(layoutResId: Int): View =
 
 fun View.setVisibleIf(condition: Boolean) {
     visibility = if (condition) View.VISIBLE else View.GONE
+}
+
+fun Dialog?.setBackgroundDialog() {
+    val window = this?.window
+    window.notNull {
+        window?.setBackgroundDrawableResource(R.drawable.bg_dialog)
+        window?.setGravity(Gravity.CENTER)
+    }
+}
+
+fun EditText.hideSoftKeyboard(context: Context) {
+    val inputManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    inputManager.hideSoftInputFromWindow(this.windowToken, 0)
 }
 
 fun <T: ViewBinding, ITEM> RecyclerView.setup(

@@ -20,6 +20,7 @@ interface DatabaseHelper {
     fun searchStorageByLowestSize(commodity: String?): LiveData<List<StorageListEntity>>
     fun searchStorageByHighestSize(commodity: String?): LiveData<List<StorageListEntity>>
     suspend fun insertAllStorage(storages: List<StorageListEntity>)
+    suspend fun insertStorage(storage: StorageListEntity)
     suspend fun deleteStorage(storage: StorageListEntity)
     suspend fun deleteAllStorage()
 

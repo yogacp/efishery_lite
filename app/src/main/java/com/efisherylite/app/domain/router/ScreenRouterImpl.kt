@@ -2,6 +2,8 @@ package com.efisherylite.app.domain.router
 
 import android.content.Context
 import android.content.Intent
+import androidx.fragment.app.DialogFragment
+import com.efisherylite.app.presentation.dialogfragment.newitem.view.NewItemDialogFragment
 import com.efisherylite.app.presentation.dialogfragment.sortview.view.SortViewBottomSheetDialog
 import com.efisherylite.app.presentation.homepage.view.HomepageActivity
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -18,6 +20,13 @@ class ScreenRouterImpl : ScreenRouter {
         }
 
         return if(klazz == null) null else Intent(context, klazz)
+    }
+
+    override fun getDialogFragmentScreenLayout(screen: ScreenRouter.DialogScreen): DialogFragment? {
+        return when(screen) {
+            ScreenRouter.DialogScreen.AddNewItem -> NewItemDialogFragment()
+            else -> null
+        }
     }
 
     override fun getBottomSheetDialogFragmentScreenLayout(screen: ScreenRouter.DialogScreen): BottomSheetDialogFragment? {

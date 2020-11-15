@@ -48,10 +48,13 @@ class HomepageActivity : BaseActivity(), DialogFragmentCallback {
     }
 
     override fun <T> onResultDialog(data: T) {
-        if (data as Int in FilterConstant.LOWEST_PRICE..FilterConstant.HIGHEST_SIZE) {
+        if (data is Int && (data as Int in FilterConstant.LOWEST_PRICE..FilterConstant.HIGHEST_SIZE)) {
             showLoading(true)
             viewModel.sortFilter = data
             sortStorageListBy()
+        } else if (data is String && (data as String).contains("data saved", ignoreCase = true)) {
+            showLoading(true)
+            refreshStorageList()
         }
     }
 
@@ -69,7 +72,7 @@ class HomepageActivity : BaseActivity(), DialogFragmentCallback {
         if (isNetworkActive() && (viewModel.searchCommodityQuery.isNullOrEmpty() || viewModel.sortFilter == 0)) {
             viewModel.fetchAllData()
         } else {
-            if(viewModel.sortFilter > 0) {
+            if (viewModel.sortFilter > 0) {
                 sortStorageListBy()
             } else {
                 refreshStorageList()
@@ -236,12 +239,8 @@ class HomepageActivity : BaseActivity(), DialogFragmentCallback {
             router.openSortFilterDialog(this)
         }
 
-        binding.layoutButtons.tvFilter.setOnClickListener {
-            toast("Filter item clicked")
-        }
-
         binding.layoutButtons.tvAddItem.setOnClickListener {
-            toast("Add item clicked")
+            router.openAddNewItemDialog(this)
         }
     }
 

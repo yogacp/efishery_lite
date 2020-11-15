@@ -21,6 +21,7 @@ class DatabaseHelperImpl(private val appDatabase: AppDatabase) : DatabaseHelper 
     override fun searchStorageByLowestSize(commodity: String?) = appDatabase.storageDao().searchStorageByLowestSize(commodity)
     override fun searchStorageByHighestSize(commodity: String?) = appDatabase.storageDao().searchStorageByHighestSize(commodity)
     override suspend fun insertAllStorage(storages: List<StorageListEntity>) = appDatabase.storageDao().insertAll(storages)
+    override suspend fun insertStorage(storage: StorageListEntity) = appDatabase.storageDao().insert(storage)
     override suspend fun deleteStorage(storage: StorageListEntity) = appDatabase.storageDao().deleteStorage(storage)
     override suspend fun deleteAllStorage() = appDatabase.storageDao().deleteAllStorage()
 

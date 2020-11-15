@@ -3,10 +3,12 @@ package com.efisherylite.app.external.extensions
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
-import android.os.Build
+import android.text.format.DateFormat
 import android.widget.Toast
 import com.efisherylite.app.BuildConfig
+import java.security.MessageDigest
 import java.text.NumberFormat
+import java.text.SimpleDateFormat
 import java.util.*
 import java.util.regex.Pattern
 
@@ -71,6 +73,23 @@ fun String?.getNumberOnly(): String {
     } else ""
 }
 
+fun String?.timestampToDate(): String? {
+    var convertDate: String? = null
+
+    try {
+        if (!this.isNullOrEmpty()) {
+            val timeStamp = this.toLong()
+            val calendar = Calendar.getInstance(Locale.getDefault())
+            calendar.timeInMillis = timeStamp * 1000L
+            convertDate = DateFormat.format("dd-MM-yyyy", calendar).toString()
+        }
+    } catch (error: Exception) {
+        error.printStackTrace()
+    }
+
+    return convertDate
+}
+
 fun String?.toIDR(): String? {
     var converted = this
 
@@ -86,4 +105,17 @@ fun String?.toIDR(): String? {
     }
 
     return converted
+}
+
+fun String.hashString(): String {
+    return MessageDigest
+        .getInstance("SHA-256")
+        .digest(this.toByteArray())
+        .fold("", { str, it -> str + "%02x".format(it) })
+}
+
+fun getCurrentDateTime(): String {
+    val calendar = Calendar.getInstance().time
+    val dateFormat = SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.getDefault())
+    return dateFormat.format(calendar)
 }

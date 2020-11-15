@@ -3,6 +3,8 @@
     <string name="loading_title">Loading</string>
     <string name="search_hint">Cari komoditas</string>
     <string name="search_label">Cari</string>
+    <string name="save_title">Simpan</string>
+    <string name="cancel_title">Batal</string>
 
     <string name="add_item_title">Tambah</string>
     <string name="sort_item_title">Urutkan</string>
@@ -10,6 +12,13 @@
 
     <string name="storage_list_area">%1$s - %2$s</string>
     <string name="storage_list_size">Ukuran: %1$s</string>
+
+    <string name="new_item_title">Tambah komoditas baru</string>
+    <string name="new_item_komoditas">Komoditas</string>
+    <string name="new_item_harga">Harga</string>
+    <string name="new_item_ukuran">Ukuran</string>
+    <string name="new_item_area_kota">Area Kota</string>
+    <string name="new_item_area_provinsi">Area Provinsi</string>
 
     <string-array name="sort_list">
         <item>Default</item>
