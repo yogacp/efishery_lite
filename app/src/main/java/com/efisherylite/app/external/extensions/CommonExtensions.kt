@@ -6,6 +6,7 @@ import android.net.NetworkCapabilities
 import android.text.format.DateFormat
 import android.widget.Toast
 import com.efisherylite.app.BuildConfig
+import java.lang.NumberFormatException
 import java.security.MessageDigest
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
@@ -91,20 +92,12 @@ fun String?.timestampToDate(): String? {
 }
 
 fun String?.toIDR(): String? {
-    var converted = this
-
-    try {
-        val formatter = NumberFormat.getCurrencyInstance(Locale.getDefault())
-        formatter.maximumFractionDigits = 0
-        formatter.currency = Currency.getInstance("IDR")
-        this.notNullOrEmpty {
-            converted = formatter.format(this?.getNumberOnly()?.toDouble())
-        }
-    } catch (error: NumberFormatException) {
+    return try {
+        "Rp ${String.format("%,d", this?.toInt())}"
+    } catch (error: Exception) {
         error.printStackTrace()
+        "Rp $this"
     }
-
-    return converted
 }
 
 fun String.hashString(): String {

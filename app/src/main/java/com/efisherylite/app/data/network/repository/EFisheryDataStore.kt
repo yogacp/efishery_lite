@@ -2,6 +2,7 @@ package com.efisherylite.app.data.network.repository
 
 import com.efisherylite.app.data.model.optionarea.OptionArea
 import com.efisherylite.app.data.model.optionsize.OptionSize
+import com.efisherylite.app.data.model.storagelist.SaveData
 import com.efisherylite.app.data.model.storagelist.StorageList
 import com.efisherylite.app.data.network.services.EFisheryServices
 import com.efisherylite.app.domain.dispatcher.DispatcherProvider
@@ -39,6 +40,14 @@ class EFisheryDataStore(
         return withContext(dispatcher.io()) {
             coroutineScope {
                 async { service.getOptionSize().await() }
+            }
+        }.await()
+    }
+
+    override suspend fun saveData(postData: List<StorageList>): Response<SaveData> {
+        return withContext(dispatcher.io()) {
+            coroutineScope {
+                async { service.saveData(postData).await() }
             }
         }.await()
     }

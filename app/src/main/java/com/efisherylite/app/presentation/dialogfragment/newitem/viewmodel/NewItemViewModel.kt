@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.efisherylite.app.data.dao.storagelist.StorageListEntity
+import com.efisherylite.app.data.model.storagelist.StorageList
 import com.efisherylite.app.domain.base.viewmodel.BaseViewModel
 import com.efisherylite.app.domain.room.database.DatabaseHelper
 import com.efisherylite.app.external.extensions.getCurrentDateTime
@@ -34,7 +35,7 @@ class NewItemViewModel(application: Application) : BaseViewModel(application) {
         viewModelScope.launch {
             try {
                 val timeStamp = (System.currentTimeMillis() / 1000).toString()
-                val storage = StorageListEntity(
+                val storage = StorageList(
                     uuid = timeStamp.hashString(),
                     areaKota = areaKota,
                     areaProvinsi = areaProvinsi,
@@ -45,8 +46,12 @@ class NewItemViewModel(application: Application) : BaseViewModel(application) {
                     timestamp = timeStamp
                 )
 
-                database.insertStorage(storage)
-                dataSaved.postValue("Data saved successfully!")
+                val saveData = repository.saveData(listOf(storage))
+                if(saveData.isSuccessful) {
+                    dataSaved.postValue("Data saved successfully!")
+                } else {
+                    dataSaved.postValue("Error saving data, please try again.")
+                }
             } catch (error: Exception) {
                 error.printStackTrace()
             }

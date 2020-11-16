@@ -18,6 +18,7 @@ interface ScreenRouter {
     sealed class DialogScreen {
         object SortFilter: DialogScreen()
         object AddNewItem: DialogScreen()
+        object ItemDetail: DialogScreen()
     }
 
     fun getScreenIntent(context: Context, screen: ActivityScreen): Intent?

@@ -14,4 +14,8 @@ object AppConstant {
         const val MIDDLE = 0.5f
         const val FINISH = 1f
     }
+
+    object INTENT_KEY {
+        const val ITEM_DETAIL = "item_detail_data"
+    }
 }

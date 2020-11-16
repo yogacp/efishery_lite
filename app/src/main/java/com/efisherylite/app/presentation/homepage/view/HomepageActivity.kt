@@ -54,7 +54,9 @@ class HomepageActivity : BaseActivity(), DialogFragmentCallback {
             sortStorageListBy()
         } else if (data is String && (data as String).contains("data saved", ignoreCase = true)) {
             showLoading(true)
-            refreshStorageList()
+            loadAllData()
+        } else if (data is String && (data as String).contains("error", ignoreCase = true)) {
+            toast(data)
         }
     }
 
@@ -106,7 +108,7 @@ class HomepageActivity : BaseActivity(), DialogFragmentCallback {
                 itemBinding?.tvPrice?.setVisibleIf(itemData.price?.isNotEmpty() == true)
             },
             {
-                toast("${it.komoditas} clicked")
+                router.openItemDetailDialog(this@HomepageActivity, it)
             }
         )
     }

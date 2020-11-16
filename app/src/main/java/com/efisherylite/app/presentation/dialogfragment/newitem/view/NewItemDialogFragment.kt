@@ -13,6 +13,7 @@ import com.efisherylite.app.databinding.DialogNewItemBinding
 import com.efisherylite.app.domain.base.dialogfragment.BaseDialogFragment
 import com.efisherylite.app.domain.callback.DialogFragmentCallback
 import com.efisherylite.app.external.extensions.hideSoftKeyboard
+import com.efisherylite.app.external.extensions.isNetworkActive
 import com.efisherylite.app.external.extensions.setBackgroundDialog
 import com.efisherylite.app.external.extensions.toast
 import com.efisherylite.app.presentation.dialogfragment.newitem.viewmodel.NewItemViewModel
@@ -105,6 +106,11 @@ class NewItemDialogFragment : BaseDialogFragment() {
         val komoditas = binding?.etKomoditas?.text.toString().trim()
         val harga = binding?.etHarga?.text.toString().trim()
         val ukuran = binding?.atvUkuran?.text.toString().trim()
-        viewModel.saveData(areaProvinsi, areaKota, komoditas, harga, ukuran)
+
+        if(context?.isNetworkActive() == true) {
+            viewModel.saveData(areaProvinsi, areaKota, komoditas, harga, ukuran)
+        } else {
+            context?.toast("Please make sure your internet is turned ON.")
+        }
     }
 }
